@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  mybatis:
+    mapper-locations: classpath:mapper/usr/*.xml # MyBatis XML 매퍼 경로
+    configuration:
+      map-underscore-to-camel-case: true  # DB의 스네이크 케이스를 카멜 케이스로 변환
+
+logging:
+  level:
+    root: INFO
+    org.mybatis: DEBUG  # ✅ MyBatis SQL 실행 로그 활성화
+    org.apache.ibatis: TRACE  # ✅ MyBatis가 XML을 찾는 과정 로그 활성화
