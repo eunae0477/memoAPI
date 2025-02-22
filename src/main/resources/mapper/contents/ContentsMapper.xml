@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  @description 컨텐츠 mapper xml
+  @author 김은애
+  @since 2025-02-21
+
+  수정일			수정자       수정내용
+  =========     =======    =================================================
+  2025-02-21	김은애		최초생성
+-->
+<mapper namespace="memo.contents.mapper.ContentsMapper">
+
+    <select id="contentsList" parameterType="ContentsVO" resultType="ContentsVO">
+        SELECT * FROM CONTENTS
+        <where>
+            <if test="categoryCode != null and categoryCode != ''">
+                CATEGORY_CODE = #{categoryCode}
+            </if>
+            <if test="platformCode != null and platformCode != ''">
+                PLATFORM_CODE = #{platformCode}
+            </if>
+            <if test="typeCode != null and typeCode != ''">
+                TYPE_CODE = #{typeCode}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                TITLE LIKE CONCAT('%', #{keyword}, '%') OR AUTHOR LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>
+
