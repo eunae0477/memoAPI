@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  @description 리뷰 mapper xml
+  @author 김은애
+  @since 2025-02-22
+
+  수정일			수정자       수정내용
+  =========     =======    =================================================
+  2025-02-22	김은애		최초생성
+-->
+<mapper namespace="memo.review.mapper.ReviewMapper">
+
+    <select id="reviewList" parameterType="ReviewVO" resultType="ReviewVO">
+        SELECT
+            *,
+            (SELECT NAME FROM USR WHERE ID = REVIEW.USR_ID) AS usrName
+        FROM REVIEW
+        <where>
+            <if test="contentsId != null and contentsId != ''">
+                CONTENTS_ID = #{contentsId}
+            </if>
+            <if test="usrId != null and usrId != ''">
+                AND USR_ID = #{usrId}
+            </if>
+        </where>
+    </select>
+
+    <select id="reviewScore" parameterType="ReviewVO" resultType="java.lang.Double">
+        SELECT
+            TRUNC(AVG(SCORE::NUMERIC), 1)
+        FROM REVIEW
+        <where>
+            <if test="contentsId != null and contentsId != ''">
+                CONTENTS_ID = #{contentsId}
+            </if>
+            <if test="usrId != null and usrId != ''">
+                USR_ID = #{usrId}
+            </if>
+        </where>
+    </select>
+</mapper>
+
