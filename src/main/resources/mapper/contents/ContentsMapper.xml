@@ -12,7 +12,10 @@
 <mapper namespace="memo.contents.mapper.ContentsMapper">
 
     <select id="contentsList" parameterType="ContentsVO" resultType="ContentsVO">
-        SELECT * FROM CONTENTS
+        SELECT
+            *,
+            (SELECT COALESCE(TRUNC(AVG(SCORE::NUMERIC), 1), 0) FROM REVIEW WHERE CONTENTS_ID = C.ID) AS SCORE
+        FROM CONTENTS C
         <where>
             <if test="categoryCode != null and categoryCode != ''">
                 CATEGORY_CODE = #{categoryCode}
@@ -27,5 +30,6 @@
                 TITLE LIKE CONCAT('%', #{keyword}, '%') OR AUTHOR LIKE CONCAT('%', #{keyword}, '%')
             </if>
         </where>
+        ORDER BY SCORE DESC
     </select>
 </mapper>

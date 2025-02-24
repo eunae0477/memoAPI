@@ -10,4 +10,6 @@ public interface ReviewMapper {
     List<ReviewVO> reviewList(ReviewVO reviewVO);
 
     Double reviewScore(ReviewVO reviewVO);
+
+    void reviewSave(ReviewVO reviewVO);
 }

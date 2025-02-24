@@ -24,6 +24,7 @@
                 AND USR_ID = #{usrId}
             </if>
         </where>
+        ORDER BY REVIEW_DATE DESC
     </select>
 
     <select id="reviewScore" parameterType="ReviewVO" resultType="java.lang.Double">
@@ -39,5 +40,12 @@
             </if>
         </where>
     </select>
+
+    <insert id="reviewSave" parameterType="ReviewVO">
+        INSERT INTO REVIEW
+            (USR_ID, CONTENTS_ID, SCORE, COMMENT, REVIEW_DATE)
+        VALUES
+            (#{usrId}, #{contentsId}, #{score}, #{comment}, now())
+    </insert>
 </mapper>
 

@@ -22,4 +22,9 @@ public class ReviewServiceImpl implements ReviewService {
     public Double reviewScore(ReviewVO reviewVO) {
         return reviewMapper.reviewScore(reviewVO);
     }
+
+    @Override
+    public void reviewSave(ReviewVO reviewVO) {
+        reviewMapper.reviewSave(reviewVO);
+    }
 }
