@@ -5,10 +5,7 @@ import memo.review.service.ReviewService;
 import memo.vo.ReviewVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,19 +16,31 @@ public class ReviewController {
 
     @GetMapping(value = "/review-list")
     @ResponseBody
-    private List<ReviewVO> reviewList(@Validated ReviewVO reviewVO) {
+    private List<ReviewVO> reviewList (@Validated ReviewVO reviewVO) {
         return reviewService.reviewList(reviewVO);
     }
 
     @GetMapping(value = "/review-score")
     @ResponseBody
-    private Double reviewScore(@Validated ReviewVO reviewVO) {
+    private Double reviewScore (@Validated ReviewVO reviewVO) {
         return reviewService.reviewScore(reviewVO);
     }
 
-    @PostMapping(value = "review-save")
+    @PostMapping(value = "review")
     @ResponseBody
-    private void reviewSave(@RequestBody @Validated ReviewVO reviewVO) {
+    private void reviewSave (@RequestBody @Validated ReviewVO reviewVO) {
         reviewService.reviewSave(reviewVO);
+    }
+
+    @DeleteMapping(value = "review")
+    @ResponseBody
+    private void reviewDelete (@Validated ReviewVO reviewVO) {
+        reviewService.reviewDelete(reviewVO);
+    }
+
+    @PutMapping(value = "review")
+    @ResponseBody
+    private void reviewUpdate (@Validated ReviewVO reviewVO) {
+        reviewService.reviewUpdate(reviewVO);
     }
 }

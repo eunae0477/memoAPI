@@ -27,4 +27,14 @@ public class ReviewServiceImpl implements ReviewService {
     public void reviewSave(ReviewVO reviewVO) {
         reviewMapper.reviewSave(reviewVO);
     }
+
+    @Override
+    public void reviewDelete(ReviewVO reviewVO) {
+        reviewMapper.reviewDelete(reviewVO);
+    }
+
+    @Override
+    public void reviewUpdate(ReviewVO reviewVO) {
+        reviewMapper.reviewUpdate(reviewVO);
+    }
 }

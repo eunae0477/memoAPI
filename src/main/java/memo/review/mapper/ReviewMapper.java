@@ -12,4 +12,8 @@ public interface ReviewMapper {
     Double reviewScore(ReviewVO reviewVO);
 
     void reviewSave(ReviewVO reviewVO);
+
+    void reviewDelete(ReviewVO reviewVO);
+
+    void reviewUpdate(ReviewVO reviewVO);
 }

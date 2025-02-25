@@ -47,5 +47,20 @@
         VALUES
             (#{usrId}, #{contentsId}, #{score}, #{comment}, now())
     </insert>
+
+    <delete id="reviewDelete" parameterType="ReviewVO">
+        DELETE FROM REVIEW
+        WHERE ID = #{id}
+    </delete>
+
+    <update id="reviewUpdate" parameterType="ReviewVO">
+        UPDATE
+            REVIEW
+        SET
+            SCORE = #{score},
+            COMMENT = #{comment},
+            REVIEW_DATE = now()
+        WHERE ID = #{id}
+    </update>
 </mapper>
 
