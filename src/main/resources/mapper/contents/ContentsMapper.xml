@@ -14,7 +14,8 @@
     <select id="contentsList" parameterType="ContentsVO" resultType="ContentsVO">
         SELECT
             *,
-            (SELECT COALESCE(TRUNC(AVG(SCORE::NUMERIC), 1), 0) FROM REVIEW WHERE CONTENTS_ID = C.ID) AS SCORE
+            (SELECT COALESCE(TRUNC(AVG(SCORE::NUMERIC), 1), 0) FROM REVIEW WHERE CONTENTS_ID = C.ID) AS SCORE,
+            (SELECT COUNT(SEEN) FROM BOOKMARK WHERE CONTENTS_ID = C.ID AND SEEN = TRUE) AS seenCnt
         FROM CONTENTS C
         <where>
             <if test="categoryCode != null and categoryCode != ''">

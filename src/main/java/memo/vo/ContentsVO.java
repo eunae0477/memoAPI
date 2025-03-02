@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ContentsVO extends SearchVO{
+public class ContentsVO extends SearchVO {
     private int id;
     private String title;
     private String author;
@@ -13,4 +13,5 @@ public class ContentsVO extends SearchVO{
     private String platformCode;
     private String typeCode;
     private String img;
+    private int seenCnt = 0;
 }

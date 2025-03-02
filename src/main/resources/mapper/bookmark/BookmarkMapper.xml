@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  @description 북마크 mapper xml
+  @author 김은애
+  @since 2025-03-02
+
+  수정일			수정자       수정내용
+  =========     =======    =================================================
+  2025-03-02	김은애		최초생성
+-->
+<mapper namespace="memo.bookmark.mapper.BookmarkMapper">
+    <select id="bookmarkList" parameterType="BookmarkVO" resultType="BookmarkVO">
+        SELECT * FROM BOOKMARK
+        <where>
+            <if test="contentsId != null and contentsId != ''">
+                CONTENTS_ID = #{contentsId}
+            </if>
+            <if test="usrId != null and usrId != ''">
+                USR_ID = #{usrId}
+            </if>
+            <if test="likeIt == true">
+                LIKE_IT = TRUE
+            </if>
+            <if test="seen == true">
+                SEEN = TRUE
+            </if>
+            <if test="bookmark == true">
+                BOOKMARK = TRUE
+            </if>
+        </where>
+    </select>
+
+    <insert id="bookmark" parameterType="BookmarkVO">
+        INSERT INTO BOOKMARK
+            (CONTENTS_ID, USR_ID, LIKE_IT, SEEN, BOOKMARK)
+        VALUES (#{contentsId}, #{usrId}, #{likeIt}, #{seen}, #{bookmark})
+        ON CONFLICT (CONTENTS_ID, USR_ID)
+            DO UPDATE
+            SET
+                LIKE_IT = #{likeIt},
+                SEEN = #{seen},
+                BOOKMARK = #{bookmark}
+            WHERE
+                CONTENTS_ID = #{contentsId}
+                AND USR_ID = #{usrId}
+    </insert>
+</mapper>
