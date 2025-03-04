@@ -16,14 +16,14 @@
             *,
             (SELECT NAME FROM USR WHERE ID = REVIEW.USR_ID) AS usrName
         FROM REVIEW
-        <where>
+        <trim prefix="WHERE" prefixOverrides="AND">
             <if test="contentsId != null and contentsId != ''">
-                CONTENTS_ID = #{contentsId}
+                AND CONTENTS_ID = #{contentsId}
             </if>
             <if test="usrId != null and usrId != ''">
                 AND USR_ID = #{usrId}
             </if>
-        </where>
+        </trim>
         ORDER BY REVIEW_DATE DESC
     </select>
 
@@ -31,14 +31,14 @@
         SELECT
             TRUNC(AVG(SCORE::NUMERIC), 1)
         FROM REVIEW
-        <where>
+        <trim prefix="WHERE" prefixOverrides="AND">
             <if test="contentsId != null and contentsId != ''">
-                CONTENTS_ID = #{contentsId}
+                AND CONTENTS_ID = #{contentsId}
             </if>
             <if test="usrId != null and usrId != ''">
-                USR_ID = #{usrId}
+                AND USR_ID = #{usrId}
             </if>
-        </where>
+        </trim>
     </select>
 
     <insert id="reviewSave" parameterType="ReviewVO">

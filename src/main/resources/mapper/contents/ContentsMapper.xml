@@ -17,20 +17,20 @@
             (SELECT COALESCE(TRUNC(AVG(SCORE::NUMERIC), 1), 0) FROM REVIEW WHERE CONTENTS_ID = C.ID) AS SCORE,
             (SELECT COUNT(SEEN) FROM BOOKMARK WHERE CONTENTS_ID = C.ID AND SEEN = TRUE) AS seenCnt
         FROM CONTENTS C
-        <where>
+        <trim prefix="WHERE" prefixOverrides="AND">
             <if test="categoryCode != null and categoryCode != ''">
-                CATEGORY_CODE = #{categoryCode}
+                AND CATEGORY_CODE = #{categoryCode}
             </if>
             <if test="platformCode != null and platformCode != ''">
-                PLATFORM_CODE = #{platformCode}
+                AND PLATFORM_CODE = #{platformCode}
             </if>
             <if test="typeCode != null and typeCode != ''">
-                TYPE_CODE = #{typeCode}
+                AND TYPE_CODE = #{typeCode}
             </if>
             <if test="keyword != null and keyword != ''">
-                TITLE LIKE CONCAT('%', #{keyword}, '%') OR AUTHOR LIKE CONCAT('%', #{keyword}, '%')
+                AND TITLE LIKE CONCAT('%', #{keyword}, '%') OR AUTHOR LIKE CONCAT('%', #{keyword}, '%')
             </if>
-        </where>
+        </trim>
         ORDER BY SCORE DESC
     </select>
 </mapper>

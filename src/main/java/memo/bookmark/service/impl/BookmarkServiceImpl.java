@@ -22,6 +22,19 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public void bookmark(BookmarkVO bookmarkVO) {
-        bookmarkMapper.bookmark(bookmarkVO);
+        if (bookmarkVO.getLikeIt() != null) {
+            bookmarkMapper.bookmarkLikeIt(bookmarkVO);
+        }
+        if (bookmarkVO.getSeen() != null) {
+            bookmarkMapper.bookmarkSeen(bookmarkVO);
+        }
+        if (bookmarkVO.getBookmark() != null) {
+            bookmarkMapper.bookmark(bookmarkVO);
+        }
+    }
+
+    @Override
+    public int bookmarkViewCnt(BookmarkVO bookmarkVO) {
+        return bookmarkMapper.bookmarkViewCnt(bookmarkVO);
     }
 }

@@ -28,4 +28,10 @@ public class BookmarkController {
     private void bookmark(@Validated BookmarkVO bookmarkVO) {
         bookmarkService.bookmark(bookmarkVO);
     }
+
+    @GetMapping(value = "/bookmark-view-cnt")
+    @ResponseBody
+    private int bookmarkViewCnt(@Validated BookmarkVO bookmarkVO) {
+        return bookmarkService.bookmarkViewCnt(bookmarkVO);
+    }
 }

@@ -12,37 +12,60 @@
 <mapper namespace="memo.bookmark.mapper.BookmarkMapper">
     <select id="bookmarkList" parameterType="BookmarkVO" resultType="BookmarkVO">
         SELECT * FROM BOOKMARK
-        <where>
+        <trim prefix="WHERE" prefixOverrides="AND">
             <if test="contentsId != null and contentsId != ''">
-                CONTENTS_ID = #{contentsId}
+                AND CONTENTS_ID = #{contentsId}
             </if>
             <if test="usrId != null and usrId != ''">
-                USR_ID = #{usrId}
+                AND USR_ID = #{usrId}
             </if>
             <if test="likeIt == true">
-                LIKE_IT = TRUE
+                AND LIKE_IT = TRUE
             </if>
             <if test="seen == true">
-                SEEN = TRUE
+                AND SEEN = TRUE
             </if>
             <if test="bookmark == true">
-                BOOKMARK = TRUE
+                AND BOOKMARK = TRUE
             </if>
-        </where>
+        </trim>
     </select>
 
     <insert id="bookmark" parameterType="BookmarkVO">
         INSERT INTO BOOKMARK
-            (CONTENTS_ID, USR_ID, LIKE_IT, SEEN, BOOKMARK)
-        VALUES (#{contentsId}, #{usrId}, #{likeIt}, #{seen}, #{bookmark})
+            (CONTENTS_ID, USR_ID, BOOKMARK)
+        VALUES (#{contentsId}, #{usrId}, #{bookmark})
         ON CONFLICT (CONTENTS_ID, USR_ID)
             DO UPDATE
             SET
-                LIKE_IT = #{likeIt},
-                SEEN = #{seen},
-                BOOKMARK = #{bookmark}
-            WHERE
-                CONTENTS_ID = #{contentsId}
-                AND USR_ID = #{usrId}
+                BOOKMARK = EXCLUDED.BOOKMARK
     </insert>
+
+    <insert id="bookmarkSeen" parameterType="BookmarkVO">
+        INSERT INTO BOOKMARK
+            (CONTENTS_ID, USR_ID, SEEN)
+        VALUES (#{contentsId}, #{usrId}, #{seen})
+        ON CONFLICT (CONTENTS_ID, USR_ID)
+            DO UPDATE
+            SET
+                SEEN = EXCLUDED.SEEN
+    </insert>
+
+    <insert id="bookmarkLikeIt" parameterType="BookmarkVO">
+        INSERT INTO BOOKMARK
+            (CONTENTS_ID, USR_ID, LIKE_IT)
+        VALUES (#{contentsId}, #{usrId}, #{likeIt})
+        ON CONFLICT (CONTENTS_ID, USR_ID)
+            DO UPDATE
+            SET
+                LIKE_IT = EXCLUDED.LIKE_IT
+    </insert>
+
+    <select id="bookmarkViewCnt" parameterType="BookmarkVO" resultType="Integer">
+        SELECT
+            COUNT(*)
+        FROM BOOKMARK
+        WHERE CONTENTS_ID = #{contentsId}
+            AND SEEN = TRUE
+    </select>
 </mapper>

@@ -11,4 +11,10 @@ public interface BookmarkMapper {
     List<ContentsVO> bookmarkList(BookmarkVO bookmarkVO);
 
     void bookmark(BookmarkVO bookmarkVO);
+
+    void bookmarkSeen(BookmarkVO bookmarkVO);
+
+    void bookmarkLikeIt(BookmarkVO bookmarkVO);
+
+    int bookmarkViewCnt(BookmarkVO bookmarkVO);
 }

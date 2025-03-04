@@ -9,4 +9,6 @@ public interface BookmarkService {
     List<ContentsVO> bookmarkList(BookmarkVO bookmarkVO);
 
     void bookmark(BookmarkVO bookmarkVO);
+
+    int bookmarkViewCnt(BookmarkVO bookmarkVO);
 }
