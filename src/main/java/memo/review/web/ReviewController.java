@@ -28,7 +28,7 @@ public class ReviewController {
 
     @PostMapping(value = "review")
     @ResponseBody
-    private void reviewSave (@RequestBody @Validated ReviewVO reviewVO) {
+    private void reviewSave (@Validated ReviewVO reviewVO) {
         reviewService.reviewSave(reviewVO);
     }
 
