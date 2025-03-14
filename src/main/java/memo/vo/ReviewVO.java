@@ -14,4 +14,7 @@ public class ReviewVO {
     private Date reviewDate;
 
     private String usrName;
+    private int reviewGoodCnt;
+    private int reviewBadCnt;
+    private String reviewGb;
 }

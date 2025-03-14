@@ -14,14 +14,14 @@
     <select id="reviewList" parameterType="ReviewVO" resultType="ReviewVO">
         SELECT
             *,
-            (SELECT NAME FROM USR WHERE ID = REVIEW.USR_ID) AS usrName
+            (SELECT NAME FROM USR WHERE ID = REVIEW.USR_ID) AS usrName,
+            (SELECT COUNT(*) FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND GB = 'G') AS reviewGoodCnt,
+            (SELECT COUNT(*) FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND GB = 'B') AS reviewBadCnt,
+            (SELECT GB FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND USR_ID = #{usrId}) AS reviewGb
         FROM REVIEW
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="contentsId != null and contentsId != ''">
                 AND CONTENTS_ID = #{contentsId}
-            </if>
-            <if test="usrId != null and usrId != ''">
-                AND USR_ID = #{usrId}
             </if>
         </trim>
         ORDER BY REVIEW_DATE DESC
