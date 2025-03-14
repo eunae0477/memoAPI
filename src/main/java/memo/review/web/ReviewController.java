@@ -2,6 +2,7 @@ package memo.review.web;
 
 import lombok.RequiredArgsConstructor;
 import memo.review.service.ReviewService;
+import memo.vo.ReviewGbVO;
 import memo.vo.ReviewVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -26,21 +27,27 @@ public class ReviewController {
         return reviewService.reviewScore(reviewVO);
     }
 
-    @PostMapping(value = "review")
+    @PostMapping(value = "/review")
     @ResponseBody
     private void reviewSave (@Validated ReviewVO reviewVO) {
         reviewService.reviewSave(reviewVO);
     }
 
-    @DeleteMapping(value = "review")
+    @DeleteMapping(value = "/review")
     @ResponseBody
     private void reviewDelete (@Validated ReviewVO reviewVO) {
         reviewService.reviewDelete(reviewVO);
     }
 
-    @PutMapping(value = "review")
+    @PutMapping(value = "/review")
     @ResponseBody
     private void reviewUpdate (@Validated ReviewVO reviewVO) {
         reviewService.reviewUpdate(reviewVO);
+    }
+
+    @PostMapping(value = "/review-gb")
+    @ResponseBody
+    private void reviewGbInsertUpdate(@Validated ReviewGbVO reviewGbVO) {
+        reviewService.reviewGbInsertUpdate(reviewGbVO);
     }
 }

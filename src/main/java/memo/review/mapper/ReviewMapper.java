@@ -1,5 +1,6 @@
 package memo.review.mapper;
 
+import memo.vo.ReviewGbVO;
 import memo.vo.ReviewVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +17,6 @@ public interface ReviewMapper {
     void reviewDelete(ReviewVO reviewVO);
 
     void reviewUpdate(ReviewVO reviewVO);
+
+    void reviewGbInsertUpdate(ReviewGbVO reviewGbVO);
 }

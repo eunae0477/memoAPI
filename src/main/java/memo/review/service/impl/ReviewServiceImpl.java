@@ -3,6 +3,7 @@ package memo.review.service.impl;
 import lombok.RequiredArgsConstructor;
 import memo.review.mapper.ReviewMapper;
 import memo.review.service.ReviewService;
+import memo.vo.ReviewGbVO;
 import memo.vo.ReviewVO;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void reviewUpdate(ReviewVO reviewVO) {
         reviewMapper.reviewUpdate(reviewVO);
+    }
+
+    @Override
+    public void reviewGbInsertUpdate(ReviewGbVO reviewGbVO) {
+        reviewMapper.reviewGbInsertUpdate(reviewGbVO);
     }
 }

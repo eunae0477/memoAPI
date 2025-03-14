@@ -62,5 +62,15 @@
             REVIEW_DATE = now()
         WHERE ID = #{id}
     </update>
+
+    <insert id="reviewGbInsertUpdate" parameterType="ReviewGbVO">
+        INSERT INTO REVIEW_GB
+            (TARGET_REVIEW_ID, USR_ID, GB)
+        VALUES (#{targetReviewId}, #{usrId}, #{gb})
+        ON CONFLICT (target_review_id, USR_ID)
+        DO UPDATE
+           SET
+               GB = EXCLUDED.GB
+    </insert>
 </mapper>
 

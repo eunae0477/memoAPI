@@ -1,5 +1,6 @@
 package memo.review.service;
 
+import memo.vo.ReviewGbVO;
 import memo.vo.ReviewVO;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface ReviewService {
     void reviewDelete(ReviewVO reviewVO);
 
     void reviewUpdate(ReviewVO reviewVO);
+
+    void reviewGbInsertUpdate(ReviewGbVO reviewGbVO);
 }
