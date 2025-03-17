@@ -10,14 +10,20 @@
   2025-03-02	김은애		최초생성
 -->
 <mapper namespace="memo.bookmark.mapper.BookmarkMapper">
-    <select id="bookmarkList" parameterType="BookmarkVO" resultType="BookmarkVO">
-        SELECT * FROM BOOKMARK
+    <select id="bookmarkList" parameterType="BookmarkVO" resultType="ContentsVO">
+        SELECT
+        C.*,
+        B.BOOKMARK,
+        B.LIKE_IT,
+        B.SEEN
+        FROM BOOKMARK B, CONTENTS C
         <trim prefix="WHERE" prefixOverrides="AND">
+            B.CONTENTS_ID = C.ID
             <if test="contentsId != null and contentsId != ''">
                 AND CONTENTS_ID = #{contentsId}
             </if>
             <if test="usrId != null and usrId != ''">
-                AND USR_ID = #{usrId}
+                AND B.USR_ID = #{usrId}
             </if>
             <if test="likeIt == true">
                 AND LIKE_IT = TRUE

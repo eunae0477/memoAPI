@@ -14,4 +14,8 @@ public class ContentsVO extends SearchVO {
     private String typeCode;
     private String img;
     private int seenCnt = 0;
+
+    private Boolean likeIt;
+    private Boolean bookmark;
+    private Boolean seen;
 }
