@@ -13,11 +13,11 @@
 
     <select id="reviewList" parameterType="ReviewVO" resultType="ReviewVO">
         SELECT
-            *,
-            (SELECT NAME FROM USR WHERE ID = REVIEW.USR_ID) AS usrName,
-            (SELECT COUNT(*) FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND GB = 'G') AS reviewGoodCnt,
-            (SELECT COUNT(*) FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND GB = 'B') AS reviewBadCnt,
-            (SELECT GB FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND USR_ID = #{usrId}) AS reviewGb
+        *,
+        (SELECT NAME FROM USR WHERE ID = REVIEW.USR_ID) AS usrName,
+        (SELECT COUNT(*) FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND GB = 'G') AS reviewGoodCnt,
+        (SELECT COUNT(*) FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND GB = 'B') AS reviewBadCnt,
+        (SELECT GB FROM REVIEW_GB WHERE TARGET_REVIEW_ID = REVIEW.ID AND USR_ID = #{usrId}) AS reviewGb
         FROM REVIEW
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="contentsId != null and contentsId != ''">
@@ -27,25 +27,11 @@
         ORDER BY REVIEW_DATE DESC
     </select>
 
-    <select id="reviewScore" parameterType="ReviewVO" resultType="java.lang.Double">
-        SELECT
-            TRUNC(AVG(SCORE::NUMERIC), 1)
-        FROM REVIEW
-        <trim prefix="WHERE" prefixOverrides="AND">
-            <if test="contentsId != null and contentsId != ''">
-                AND CONTENTS_ID = #{contentsId}
-            </if>
-            <if test="usrId != null and usrId != ''">
-                AND USR_ID = #{usrId}
-            </if>
-        </trim>
-    </select>
-
     <insert id="reviewSave" parameterType="ReviewVO">
         INSERT INTO REVIEW
-            (USR_ID, CONTENTS_ID, SCORE, COMMENT, REVIEW_DATE)
+        (USR_ID, CONTENTS_ID, SCORE, COMMENT, REVIEW_DATE)
         VALUES
-            (#{usrId}, #{contentsId}, #{score}, #{comment}, now())
+        (#{usrId}, #{contentsId}, #{score}, #{comment}, now())
     </insert>
 
     <delete id="reviewDelete" parameterType="ReviewVO">
@@ -55,22 +41,22 @@
 
     <update id="reviewUpdate" parameterType="ReviewVO">
         UPDATE
-            REVIEW
+        REVIEW
         SET
-            SCORE = #{score},
-            COMMENT = #{comment},
-            REVIEW_DATE = now()
+        SCORE = #{score},
+        COMMENT = #{comment},
+        REVIEW_DATE = now()
         WHERE ID = #{id}
     </update>
 
     <insert id="reviewGbInsertUpdate" parameterType="ReviewGbVO">
         INSERT INTO REVIEW_GB
-            (TARGET_REVIEW_ID, USR_ID, GB)
+        (TARGET_REVIEW_ID, USR_ID, GB)
         VALUES (#{targetReviewId}, #{usrId}, #{gb})
         ON CONFLICT (target_review_id, USR_ID)
         DO UPDATE
-           SET
-               GB = EXCLUDED.GB
+        SET
+        GB = EXCLUDED.GB
     </insert>
 </mapper>
 

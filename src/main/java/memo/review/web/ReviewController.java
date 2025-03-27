@@ -21,12 +21,6 @@ public class ReviewController {
         return reviewService.reviewList(reviewVO);
     }
 
-    @GetMapping(value = "/review-score")
-    @ResponseBody
-    private Double reviewScore (@Validated ReviewVO reviewVO) {
-        return reviewService.reviewScore(reviewVO);
-    }
-
     @PostMapping(value = "/review")
     @ResponseBody
     private void reviewSave (@Validated ReviewVO reviewVO) {

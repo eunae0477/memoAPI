@@ -9,7 +9,6 @@ public class ReviewVO {
     private int id;
     private int usrId;
     private int contentsId;
-    private int score;
     private String comment;
     private Date reviewDate;
 

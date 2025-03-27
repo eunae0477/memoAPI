@@ -32,5 +32,6 @@
             </if>
         </trim>
         ORDER BY SCORE DESC
+        LIMIT 10
     </select>
 </mapper>
