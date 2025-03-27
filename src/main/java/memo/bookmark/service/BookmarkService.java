@@ -11,4 +11,6 @@ public interface BookmarkService {
     void bookmark(BookmarkVO bookmarkVO);
 
     int bookmarkViewCnt(BookmarkVO bookmarkVO);
+
+    ContentsVO contentsBookmark(BookmarkVO bookmarkVO);
 }

@@ -17,6 +17,12 @@ public class BookmarkController {
 
     private final BookmarkService bookmarkService;
 
+    @GetMapping(value = "/contents-bookmark")
+    @ResponseBody
+    private ContentsVO contentsBookmark(@Validated BookmarkVO bookmarkVO) {
+        return bookmarkService.contentsBookmark(bookmarkVO);
+    }
+
     @GetMapping(value = "/bookmark-list")
     @ResponseBody
     private List<ContentsVO> bookmarkList(@Validated BookmarkVO bookmarkVO) {
@@ -33,5 +39,11 @@ public class BookmarkController {
     @ResponseBody
     private int bookmarkViewCnt(@Validated BookmarkVO bookmarkVO) {
         return bookmarkService.bookmarkViewCnt(bookmarkVO);
+    }
+
+    @GetMapping(value = "/bookmark-seq")
+    @ResponseBody
+    private List<ContentsVO> bookmarkSeq(@Validated BookmarkVO bookmarkVO) {
+        return bookmarkService.bookmarkList(bookmarkVO);
     }
 }

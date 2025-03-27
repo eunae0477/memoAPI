@@ -10,68 +10,108 @@
   2025-03-02	김은애		최초생성
 -->
 <mapper namespace="memo.bookmark.mapper.BookmarkMapper">
-    <select id="bookmarkList" parameterType="BookmarkVO" resultType="ContentsVO">
+    <select id="contentsBookmark" parameterType="BookmarkVO" resultType="ContentsVO">
         SELECT
-        C.*,
-        B.BOOKMARK,
-        B.LIKE_IT,
-        B.SEEN
-        FROM BOOKMARK B, CONTENTS C
+            C.*,
+            CASE
+                WHEN (SELECT COUNT(*) FROM BOOKMARK WHERE CONTENTS_ID = C.ID AND USR_ID = #{usrId}) > 0 THEN TRUE
+                ELSE FALSE
+            END AS bookmark,
+            CASE
+                WHEN (SELECT COUNT(*) FROM LIKE_IT WHERE CONTENTS_ID = C.ID AND USR_ID = #{usrId}) > 0 THEN TRUE
+                ELSE FALSE
+            END AS likeIt,
+            CASE
+                WHEN (SELECT COUNT(*) FROM SEEN WHERE CONTENTS_ID = C.ID AND USR_ID = #{usrId}) > 0 THEN TRUE
+                ELSE FALSE
+            END AS seen
+        FROM CONTENTS C
         <trim prefix="WHERE" prefixOverrides="AND">
-            B.CONTENTS_ID = C.ID
             <if test="contentsId != null and contentsId != ''">
-                AND CONTENTS_ID = #{contentsId}
-            </if>
-            <if test="usrId != null and usrId != ''">
-                AND B.USR_ID = #{usrId}
-            </if>
-            <if test="likeIt == true">
-                AND LIKE_IT = TRUE
-            </if>
-            <if test="seen == true">
-                AND SEEN = TRUE
-            </if>
-            <if test="bookmark == true">
-                AND BOOKMARK = TRUE
+                ID = #{contentsId}
             </if>
         </trim>
     </select>
 
+    <select id="bookmarkList" parameterType="BookmarkVO" resultType="ContentsVO">
+        SELECT
+            C.*
+        FROM CONTENTS C, BOOKMARK T
+        WHERE C.ID = T.CONTENTS_ID
+            AND T.USR_ID = #{usrId}
+    </select>
+
+    <select id="likeItList" parameterType="BookmarkVO" resultType="ContentsVO">
+        SELECT
+            C.*
+        FROM CONTENTS C, LIKE_IT T
+        WHERE C.ID = T.CONTENTS_ID
+          AND T.USR_ID = #{usrId}
+    </select>
+
+    <select id="seenList" parameterType="BookmarkVO" resultType="ContentsVO">
+        SELECT
+            C.*
+        FROM CONTENTS C, SEEN T
+        WHERE C.ID = T.CONTENTS_ID
+          AND T.USR_ID = #{usrId}
+    </select>
+
+    <select id="getMaxSeqForUpdate" resultType="Integer">
+        SELECT seq
+        FROM bookmark
+        WHERE usr_id = #{usrId}
+        ORDER BY seq DESC
+        LIMIT 1
+            FOR UPDATE
+    </select>
+
     <insert id="bookmark" parameterType="BookmarkVO">
         INSERT INTO BOOKMARK
-            (CONTENTS_ID, USR_ID, BOOKMARK)
-        VALUES (#{contentsId}, #{usrId}, #{bookmark})
-        ON CONFLICT (CONTENTS_ID, USR_ID)
-            DO UPDATE
-            SET
-                BOOKMARK = EXCLUDED.BOOKMARK
+            (CONTENTS_ID, USR_ID, SEQ)
+        VALUES (#{contentsId}, #{usrId}, #{seq})
     </insert>
 
     <insert id="bookmarkSeen" parameterType="BookmarkVO">
-        INSERT INTO BOOKMARK
-            (CONTENTS_ID, USR_ID, SEEN)
-        VALUES (#{contentsId}, #{usrId}, #{seen})
-        ON CONFLICT (CONTENTS_ID, USR_ID)
-            DO UPDATE
-            SET
-                SEEN = EXCLUDED.SEEN
+        INSERT INTO SEEN
+            (CONTENTS_ID, USR_ID)
+        VALUES (#{contentsId}, #{usrId})
     </insert>
 
     <insert id="bookmarkLikeIt" parameterType="BookmarkVO">
-        INSERT INTO BOOKMARK
-            (CONTENTS_ID, USR_ID, LIKE_IT)
-        VALUES (#{contentsId}, #{usrId}, #{likeIt})
-        ON CONFLICT (CONTENTS_ID, USR_ID)
-            DO UPDATE
-            SET
-                LIKE_IT = EXCLUDED.LIKE_IT
+        INSERT INTO LIKE_IT
+            (CONTENTS_ID, USR_ID)
+        VALUES (#{contentsId}, #{usrId})
     </insert>
+
+    <delete id="bookmarkDel" parameterType="BookmarkVO">
+        DELETE
+        FROM BOOKMARK
+        WHERE
+            CONTENTS_ID = #{contentsId}
+            AND USR_ID = #{usrId}
+    </delete>
+
+    <delete id="bookmarkSeenDel" parameterType="BookmarkVO">
+        DELETE
+        FROM SEEN
+        WHERE
+            CONTENTS_ID = #{contentsId}
+          AND USR_ID = #{usrId}
+    </delete>
+
+    <delete id="bookmarkLikeItDel" parameterType="BookmarkVO">
+        DELETE
+        FROM LIKE_IT
+        WHERE
+            CONTENTS_ID = #{contentsId}
+          AND USR_ID = #{usrId}
+    </delete>
 
     <select id="bookmarkViewCnt" parameterType="BookmarkVO" resultType="Integer">
         SELECT
             COUNT(*)
-        FROM BOOKMARK
+        FROM SEEN
         WHERE CONTENTS_ID = #{contentsId}
-            AND SEEN = TRUE
     </select>
 </mapper>

@@ -17,4 +17,18 @@ public interface BookmarkMapper {
     void bookmarkLikeIt(BookmarkVO bookmarkVO);
 
     int bookmarkViewCnt(BookmarkVO bookmarkVO);
+
+    void bookmarkLikeItDel(BookmarkVO bookmarkVO);
+
+    void bookmarkSeenDel(BookmarkVO bookmarkVO);
+
+    void bookmarkDel(BookmarkVO bookmarkVO);
+
+    Integer getMaxSeqForUpdate(BookmarkVO bookmarkVO);
+
+    ContentsVO contentsBookmark(BookmarkVO bookmarkVO);
+
+    List<ContentsVO> likeItList(BookmarkVO bookmarkVO);
+
+    List<ContentsVO> seenList(BookmarkVO bookmarkVO);
 }

@@ -7,7 +7,7 @@ public class BookmarkVO {
     private int id;
     private int contentsId;
     private int usrId;
-    private Boolean likeIt;
+    private int seq;
+    private String bookmarkType;
     private Boolean bookmark;
-    private Boolean seen;
 }

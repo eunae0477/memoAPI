@@ -15,7 +15,7 @@
         SELECT
             *,
             (SELECT COALESCE(TRUNC(AVG(SCORE::NUMERIC), 1), 0) FROM REVIEW WHERE CONTENTS_ID = C.ID) AS SCORE,
-            (SELECT COUNT(SEEN) FROM BOOKMARK WHERE CONTENTS_ID = C.ID AND SEEN = TRUE) AS seenCnt
+            (SELECT COUNT(*) FROM SEEN WHERE CONTENTS_ID = C.ID) AS seenCnt
         FROM CONTENTS C
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test="categoryCode != null and categoryCode != ''">
