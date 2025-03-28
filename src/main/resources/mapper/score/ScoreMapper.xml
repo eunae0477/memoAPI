@@ -21,7 +21,7 @@
         SELECT
             SCORE
         FROM SCORE
-        WHERE USR_ID = #{usrId}
+        WHERE USR_ID = #{usrId} AND CONTENTS_ID = #{contentsId}
     </select>
 
     <insert id="myScoreSave" parameterType="ScoreVO">
