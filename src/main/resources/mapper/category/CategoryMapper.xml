@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  @description 카테고리 mapper xml
+  @author 김은애
+  @since 2025-04-01
+
+  수정일			수정자       수정내용
+  =========     =======    =================================================
+  2025-04-01	김은애		최초생성
+-->
+<mapper namespace="memo.category.mapper.CategoryMapper">
+
+    <select id="categoryList" parameterType="CategoryVO" resultType="CategoryVO">
+        SELECT * FROM CATEGORY
+        WHERE TYPE_CODE = #{typeCode}
+    </select>
+</mapper>
+
