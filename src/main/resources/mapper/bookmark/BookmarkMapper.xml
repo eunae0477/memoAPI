@@ -114,4 +114,12 @@
         FROM SEEN
         WHERE CONTENTS_ID = #{contentsId}
     </select>
+
+    <update id="bookmarkSeq" parameterType="BookmarkVO">
+        UPDATE BOOKMARK
+            SET SEQ = #{seq}
+            WHERE
+                CONTENTS_ID = #{contentsId}
+              AND USR_ID = #{usrId}
+    </update>
 </mapper>

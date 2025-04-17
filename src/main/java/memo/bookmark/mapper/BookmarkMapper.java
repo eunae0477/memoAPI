@@ -31,4 +31,6 @@ public interface BookmarkMapper {
     List<ContentsVO> likeItList(BookmarkVO bookmarkVO);
 
     List<ContentsVO> seenList(BookmarkVO bookmarkVO);
+
+    void bookmarkSeq(BookmarkVO bookmarkVO);
 }

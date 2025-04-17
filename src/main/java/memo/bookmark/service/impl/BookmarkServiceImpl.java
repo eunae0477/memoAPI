@@ -78,4 +78,14 @@ public class BookmarkServiceImpl implements BookmarkService {
     public int bookmarkViewCnt(BookmarkVO bookmarkVO) {
         return bookmarkMapper.bookmarkViewCnt(bookmarkVO);
     }
+
+    @Override
+    public void bookmarkSeq(BookmarkVO bookmarkVO) {
+        System.out.println(bookmarkVO.getContentsIdArr());
+        for (int i = 1; i <= bookmarkVO.getContentsIdArr().size(); i++) {
+            bookmarkVO.setSeq(i);
+            bookmarkVO.setContentsId(bookmarkVO.getContentsIdArr().get(i-1));
+            bookmarkMapper.bookmarkSeq(bookmarkVO);
+        }
+    }
 }
